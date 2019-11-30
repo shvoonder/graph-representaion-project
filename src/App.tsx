@@ -1,6 +1,7 @@
 import { Layout } from "antd"
 const { Header, Content, Footer} = Layout;
 import * as React from 'react';
+import { Graph } from "./components/Graph";
 
 interface IAppState {
 
@@ -24,7 +25,9 @@ export default class App extends React.Component<IAppProps, IAppState> {
                 </Header>
                 <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                     <div style={{ padding: 24, background: '#fff', textAlign: 'center' }}>
-                        not mobile
+                        <Graph
+                            // props comes here
+                        />
                     </div>
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
