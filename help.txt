@@ -1,0 +1,30 @@
+package.json: 
+    * instalation configuration
+    * list all the packages that will be used in the project
+    * list all the dev packages that will be used in the project
+    * define scripts for deployment, testing, and running
+    * general meta for the project
+
+
+JSON:
+    * serializble objects that are being used by the web
+    * all of json can be serialized to in order to be sent over the web (trasformed to strings)
+    
+tsconfig.json:
+    * config file for the TypeScript compiler.
+    * control how strict the compiler is.
+
+JavaScript:
+    * contructing - building JS objects (json-like)
+    * destructing - building JS consts out of JS objects with defult options
+    
+TypeScript:
+    * javascript with extra fetures
+    * used by react and other frameworks
+    * popularity is raising
+    * compiled to javascript, you can control how in tsconfig.json
+    * files are being saved as .ts files instead of js, as well of .tsx isnted of .jsx
+    * interfaces defining structure of an object
+    * extends -> interface of interface / class of class
+    * implaments -> class of interface
+    
