@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { GraphView } from 'react-digraph';
+import {GraphView } from 'react-digraph';
     
 
   const GraphConfig =  {
@@ -8,7 +8,7 @@ import { GraphView } from 'react-digraph';
         typeText: "None",
         shapeId: "#empty", // relates to the type property of a node
         shape: (
-          <symbol viewBox="0 0 100 100" id="empty" key="0">
+          <symbol id="empty" key="0" viewBox="0 0 100 100">
             <circle cx="50" cy="50" r="45"></circle>
           </symbol>
         )

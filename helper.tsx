@@ -25,7 +25,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
     }
 
     private isMobile(): boolean {
-        return document.host.WIDTH < 1000
+        return window.innerWidth< 1000;
     }
 
     public render(){
