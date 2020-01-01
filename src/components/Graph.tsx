@@ -85,8 +85,18 @@ import {GraphView } from 'react-digraph';
         ]
     }
   }
-
+  const nodes = this.state.graph.nodes;
+  const edges = this.state.graph.edges;
+  const selected = this.state.selected;
   export class Graph extends React.Component {
+    onSelectNode: any;
+    onCreateNode: any;
+    onUpdateNode: any;
+    onDeleteNode: any;
+    onSelectEdge: any;
+    onCreateEdge: any;
+    onSwapEdge: any;
+    onDeleteEdge: any;
    
     constructor(props) {
       super(props);
@@ -100,9 +110,9 @@ import {GraphView } from 'react-digraph';
     /* Define custom graph editing methods here */
    
     render() {
-      const nodes = this.state.graph.nodes;
-      const edges = this.state.graph.edges;
-      const selected = this.state.selected;
+      //const nodes = this.state.graph.nodes;
+      //const edges = this.state.graph.edges;
+      //const selected = this.state.selected;
    
       const NodeTypes = GraphConfig.NodeTypes;
       const NodeSubtypes = GraphConfig.NodeSubtypes;
