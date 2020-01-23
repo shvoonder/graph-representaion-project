@@ -1,14 +1,18 @@
 import { Layout } from "antd"
 const { Header, Content, Footer} = Layout;
 import * as React from 'react';
-import { Graph } from "./components/Graph";
+import { Graph, IGraphConfig } from "./components/Graph";
+
+export interface IAppConfig {
+    graphConfig: IGraphConfig
+}
 
 interface IAppState {
 
 }
 
 interface IAppProps {
-    
+    appConfig: IAppConfig
 }
 
 export default class App extends React.Component<IAppProps, IAppState> {
@@ -18,6 +22,8 @@ export default class App extends React.Component<IAppProps, IAppState> {
     }
 
     public render(){
+        const { appConfig } = this.props
+        const { graphConfig } = appConfig
         return (
             <Layout style={{}}>
                 <Header style={{ background: '#fff', padding: 0, textAlign: 'center' }}>
@@ -26,7 +32,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
                 <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                     <div style={{ padding: 24, background: '#fff', textAlign: 'center' }}>
                         <Graph
-                            // props comes here
+                            graphConfig={graphConfig}
                         />
                     </div>
                 </Content>
