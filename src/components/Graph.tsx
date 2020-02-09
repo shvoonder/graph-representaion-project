@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { GraphView } from 'react-digraph';
-import { GraphConfig, NODE_KEY, sample } from 'src/graphConfig'
-import { node } from 'prop-types';
+import {  NODE_KEY} from 'src/graphConfig'
+
 
 export interface IGraphConfig {
   NodeTypes: INodeTypes,
-  NodeSubtypes: INodeSubtypes
   EdgeTypes: IEdgeTypes
 }
 
@@ -36,9 +35,7 @@ interface INodeTypes {
   };
 }
 
-interface INodeSubtypes {
 
-}
 
 interface IEdgeTypes {
   EdgeTypes: {
@@ -68,20 +65,13 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
   constructor(props) {
     super(props);
       
-    this.state = {
-      graph: {
-        nodes: [],
-        edges: []
-      },
-      selected: []
-    }
+    this.state = {graph: {nodes: [],edges: []},selected: []}
   }
   
-  /* Define custom graph editing methods here */
   
   render() {
     const { graphConfig } = this.props
-    const { NodeTypes, NodeSubtypes, EdgeTypes } = graphConfig
+    const { NodeTypes, EdgeTypes } = graphConfig
     const { graph, selected } = this.state
     const { nodes, edges } = graph
   
@@ -93,7 +83,6 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
                     edges={edges}
                     selected={selected}
                     nodeTypes={NodeTypes}
-                    nodeSubtypes={NodeSubtypes}
                     edgeTypes={EdgeTypes}
                     onSelectNode={this.onSelectNode}
                     onCreateNode={this.onCreateNode}
@@ -108,24 +97,25 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
   }
   
   onSelectNode(node: INode) {
-    const { selected } = this.state
+    const { selected } = this.state.selected
     selected.push(node)
     this.setState({
       selected: selected
     })
   }
 
-  onCreateNode = (x: number, y: number) => {
-    const graph = this.state.graph;
-    const type = "Custom";
-    const viewNode = {
-      id: Date.now(),
-      title: '',
-      type,
-      x,
-      y,
-    };
+  onCreateNode (x: number, y: number) {
+    //const graph = this.state.graph
+    //const type = "Custom";
+    //const viewNode = {
+      //id: Date.now(),
+      //title: '',
+      //type,
+      //x,
+      //y,
+    //}
     }
+    
 
     getNodeIndex(node: INode) {
         return this.state.graph.nodes.findIndex(node => {
@@ -149,12 +139,12 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
       };
 
     onDeleteNode (node: INode, nodeId: string, nodeArr: INode[]){
-            const graph = this.state.graph;
-            const newEdges = graph.edges.filter((edge, i) => {
-              return (
-                edge.source !== node[NODE_KEY] && edge.target !== node[NODE_KEY]
-              );
-            });  
+            //const graph = this.state.graph;
+          //  const edges = graph.edges.filter((edge, i) => {
+            //  return (
+              //  edge.source !== node[NODE_KEY] && edge.target !== node[NODE_KEY]
+              //);
+            //});  
       }
     onSelectEdge(edge:IEdge){
         const {selected}=this.state;
@@ -205,11 +195,7 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
         });
     };
 
-
-
-
-
-    }  
+}  
 
 
 
