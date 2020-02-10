@@ -76,8 +76,7 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
   
     return (
       <div id='graph' style={{}}>
-        <GraphView 
-                    nodeKey={NODE_KEY}
+        <GraphView  nodeKey={NODE_KEY}
                     nodes={nodes}
                     edges={edges}
                     selected={selected}
@@ -95,41 +94,45 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
     );
   }
   
-  onSelectNode(node: INode) {
-     // const { selected } = this.state.selected
-     // selected.push(node)
-     // this.setState({
-      // selected: selected
-    // })
+  onSelectNode=(node: INode) =>{
+      const graph = this.state.graph
+      const { selected } = this.state.selected
+      selected.push(node)
+      this.setState({
+       graph,selected
+     })
   }
 
-  onCreateNode (x: number, y: number) {
-    // const graph = this.state.graph
-    // const type = "Custom";
-    // const viewNode = {
-      // id: Date.now(),
-      // title: '',
-      // type,
-      // x,
-      // y,
-    // }
+  onCreateNode =(x: number, y: number) =>{
+     const graph = this.state.graph
+     const type = "Custom";
+     const viewNode = {
+       id: Date.now(),
+       title: '',
+       type,
+       x,
+       y,
+     }
+     this.setState({
+        graph,selected:viewNode
+      })
     }
     
 
-    getNodeIndex(node: INode) {
+    getNodeIndex=(node: INode)=> {
         return this.state.graph.nodes.findIndex(node => {
           return node[NODE_KEY] === node[NODE_KEY];
         });
       }
     
-    getEdgeIndex(edge: IEdge) {
+    getEdgeIndex=(edge: IEdge) =>{
         return this.state.graph.edges.findIndex(edgeCheck => {
             return(edgeCheck.source === edge.source && edgeCheck.target===edge.target 
             );   
         });
       }
 
-   onUpdateNode (node: INode) {
+   onUpdateNode= (node: INode) =>{
         const graph = this.state.graph;
         const i = this.getNodeIndex(node);
     
@@ -137,22 +140,27 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
         this.setState({ graph });
       };
 
-    onDeleteNode (node: INode, nodeId: string, nodeArr: INode[]){
-            // const graph = this.state.graph;
-            //  const edges = graph.edges.filter((edge, i) => {
-            //  return (
-              //  edge.source !== node[NODE_KEY] && edge.target !== node[NODE_KEY]
-              // );
-            // });  
-      }
-    onSelectEdge(edge:IEdge){
-        // const {selected}=this.state;
-        // selected.push(edge)
-        // this.setState({selected:selected});
-    }
+    onDeleteNode =(viewNode: INode, nodeId: string, nodeArr: INode[])=>{
+        const graph = this.state.graph;
+        // Delete any connected edges
+        const newEdges = graph.edges.filter((edge, i) => {
+          return (
+            edge.source !== viewNode[NODE_KEY] && edge.target !== viewNode[NODE_KEY]
+          );
+        });
+    
+        graph.nodes = nodeArr;
+        graph.edges = newEdges;
+    
+        this.setState({ graph, selected: null });
+      };
+
+      onSelectEdge = (viewEdge: IEdge) => {
+        this.setState({ selected: viewEdge });
+      };
 
 
-    onCreateEdge (sourceViewNode: INode, targetViewNode: INode){
+    onCreateEdge= (sourceViewNode: INode, targetViewNode: INode)=>{
         const graph = this.state.graph;
         const type ="Custom"
         const viewEdge = {
@@ -162,15 +170,13 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
         };
         if (viewEdge.source !== viewEdge.target) {
           graph.edges = [...graph.edges, viewEdge];
-          this.setState({
-            graph,
-            selected: viewEdge,
+          this.setState({graph,selected: viewEdge,
           });
         }
       };
     
       
-     onSwapEdge (sourceViewNode: INode,targetViewNode: INode,viewEdge: IEdge){
+     onSwapEdge =(sourceViewNode: INode,targetViewNode: INode,viewEdge: IEdge)=>{
         const graph = this.state.graph;
         const i = this.getEdgeIndex(viewEdge);
         const edge = JSON.parse(JSON.stringify(graph.edges[i]));
@@ -184,7 +190,7 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
             selected: edge,
         });
     };
-    onDeleteEdge (viewEdge: IEdge, edges: IEdge[]) {
+    onDeleteEdge =(viewEdge: IEdge, edges: IEdge[])=> {
         const graph = this.state.graph;
 
         graph.edges = edges;

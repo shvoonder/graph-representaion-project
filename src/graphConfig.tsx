@@ -26,7 +26,7 @@ export const GraphConfig =  {
             shapeId: "#empty", 
             shape: (
               <symbol id="empty" key="0">
-                <line cx="50" cy="50" r="45"/>
+                <line cx="50" cy="50"/>
               </symbol>
             )
             }
