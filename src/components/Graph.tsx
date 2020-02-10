@@ -38,12 +38,11 @@ interface INodeTypes {
 
 
 interface IEdgeTypes {
-  EdgeTypes: {
     emptyEdge: {
         shapeId: string;
         shape: JSX.Element;
     };
-  }
+  
 }
 
 interface IGraph {
@@ -77,7 +76,7 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
   
     return (
       <div id='graph' style={{}}>
-        <GraphView  ref='GraphView'
+        <GraphView 
                     nodeKey={NODE_KEY}
                     nodes={nodes}
                     edges={edges}
@@ -97,23 +96,23 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
   }
   
   onSelectNode(node: INode) {
-    const { selected } = this.state.selected
-    selected.push(node)
-    this.setState({
-      selected: selected
-    })
+     // const { selected } = this.state.selected
+     // selected.push(node)
+     // this.setState({
+      // selected: selected
+    // })
   }
 
   onCreateNode (x: number, y: number) {
-    //const graph = this.state.graph
-    //const type = "Custom";
-    //const viewNode = {
-      //id: Date.now(),
-      //title: '',
-      //type,
-      //x,
-      //y,
-    //}
+    // const graph = this.state.graph
+    // const type = "Custom";
+    // const viewNode = {
+      // id: Date.now(),
+      // title: '',
+      // type,
+      // x,
+      // y,
+    // }
     }
     
 
@@ -139,17 +138,17 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
       };
 
     onDeleteNode (node: INode, nodeId: string, nodeArr: INode[]){
-            //const graph = this.state.graph;
-          //  const edges = graph.edges.filter((edge, i) => {
+            // const graph = this.state.graph;
+            //  const edges = graph.edges.filter((edge, i) => {
             //  return (
               //  edge.source !== node[NODE_KEY] && edge.target !== node[NODE_KEY]
-              //);
-            //});  
+              // );
+            // });  
       }
     onSelectEdge(edge:IEdge){
-        const {selected}=this.state;
-        selected.push(edge)
-        this.setState({selected:selected});
+        // const {selected}=this.state;
+        // selected.push(edge)
+        // this.setState({selected:selected});
     }
 
 

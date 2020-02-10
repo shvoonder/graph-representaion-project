@@ -7,7 +7,7 @@ export const GraphConfig =  {
         shapeId: "#empty", // relates to the type property of a node
         shape: (
           <symbol viewBox="0 0 100 100" id="empty" key="0">
-            <circle cx="50" cy="50" r="45"></circle>
+            <circle cx="50" cy="50" r="45"/>
           </symbol>
         )
       },
@@ -16,12 +16,23 @@ export const GraphConfig =  {
         shapeId: "#custom", // relates to the type property of a node
         shape: (
           <symbol viewBox="0 0 50 25" id="custom" key="0">
-            <ellipse cx="50" cy="25" rx="50" ry="25"></ellipse>
+            <ellipse cx="50" cy="25" rx="50" ry="25"/>
           </symbol>
         )
       }
-    }
+    },
+     EdgeTypes: {
+        emptyEdge: { 
+            shapeId: "#empty", 
+            shape: (
+              <symbol id="empty" key="0">
+                <line cx="50" cy="50" r="45"/>
+              </symbol>
+            )
+            }
+        }
   }
+
    
   export const NODE_KEY = "id"       // Allows D3 to correctly update DOM
 
