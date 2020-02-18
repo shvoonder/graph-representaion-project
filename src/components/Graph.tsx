@@ -60,7 +60,7 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
 
   onCreateNode =(x: number, y: number) =>{
      const graph = this.state.graph
-     const type = "Custom";
+     const type = "special";
      const viewNode = {
        id: Date.now(),
        title: 'Node id',
@@ -115,7 +115,7 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
 
     onCreateEdge= (sourceViewNode: INode, targetViewNode: INode)=>{
         const graph = this.state.graph;
-        const type ="Custom"
+        const type ="specialEdge"
         const viewEdge = {
           source: sourceViewNode[NODE_KEY],
           target: targetViewNode[NODE_KEY],

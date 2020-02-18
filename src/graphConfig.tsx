@@ -1,6 +1,16 @@
 import * as React from 'react'
 
+
+ // const EMPTY_TYPE = 'customEmpty';  Empty node type
+ // const SPECIAL_TYPE = 'special';
+ // const EMPTY_EDGE_TYPE = 'emptyEdge';
+ // const SPECIAL_EDGE_TYPE = 'specialEdge';
+
+
+ // const nodeTypes = [EMPTY_TYPE,SPECIAL_TYPE];
+ // const edgeTypes = [EMPTY_EDGE_TYPE, SPECIAL_EDGE_TYPE];
 export const GraphConfig =  {
+    
     NodeTypes: {
       empty: { // required to show empty nodes
         typeText: "None",
@@ -26,7 +36,7 @@ export const GraphConfig =  {
             shapeId: "#empty", 
             shape: (
               <symbol id="empty" key="0">
-                <line cx="50" cy="50"/>
+                <line />
               </symbol>
             )
             }
