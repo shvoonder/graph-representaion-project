@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { GraphView } from 'react-digraph';
-import {  NODE_KEY} from 'src/graphConfig'
+import { GraphView,IEdge,INode} from 'react-digraph';
+import { NODE_KEY} from 'src/graphConfig';
 
 
 export interface IGraphConfig {
@@ -8,19 +8,6 @@ export interface IGraphConfig {
   EdgeTypes: IEdgeTypes
 }
 
-interface INode {
-  id: number,
-  title: string,
-  x: number,
-  y: number,
-  type: string
-}
-
-interface IEdge {
-  source: number
-  target: number
-  type: string
-}
 
 interface INodeTypes {
   empty: {
@@ -34,8 +21,6 @@ interface INodeTypes {
       shape: JSX.Element;
   };
 }
-
-
 
 interface IEdgeTypes {
     emptyEdge: {
@@ -60,6 +45,7 @@ interface IGraphState {
 }
 
 export class Graph extends React.Component<IGraphProps, IGraphState> {
+    GraphView;
   
   constructor(props) {
     super(props);
@@ -67,56 +53,24 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
     this.state = {graph: {nodes: [],edges: []},selected: []}
   }
   
-  
-  render() {
-    const { graphConfig } = this.props
-    const { NodeTypes, EdgeTypes } = graphConfig
-    const { graph, selected } = this.state
-    const { nodes, edges } = graph
-  
-    return (
-      <div id='graph' style={{}}>
-        <GraphView  nodeKey={NODE_KEY}
-                    nodes={nodes}
-                    edges={edges}
-                    selected={selected}
-                    nodeTypes={NodeTypes}
-                    edgeTypes={EdgeTypes}
-                    onSelectNode={this.onSelectNode}
-                    onCreateNode={this.onCreateNode}
-                    onUpdateNode={this.onUpdateNode}
-                    onDeleteNode={this.onDeleteNode}
-                    onSelectEdge={this.onSelectEdge}
-                    onCreateEdge={this.onCreateEdge}
-                    onSwapEdge={this.onSwapEdge}
-                    onDeleteEdge={this.onDeleteEdge}/>
-      </div>
-    );
-  }
-  
-  onSelectNode=(node: INode) =>{
-      const graph = this.state.graph
-      const { selected } = this.state.selected
-      selected.push(node)
-      this.setState({
-       graph,selected
-     })
-  }
+  onSelectNode = (viewNode: INode | null) => {
+    this.setState({ selected: viewNode });
+  };
+
 
   onCreateNode =(x: number, y: number) =>{
      const graph = this.state.graph
      const type = "Custom";
      const viewNode = {
        id: Date.now(),
-       title: '',
+       title: 'Node id',
        type,
        x,
        y,
-     }
-     this.setState({
-        graph,selected:viewNode
-      })
-    }
+     };
+     graph.nodes = [...graph.nodes, viewNode];
+    this.setState({ graph });
+    };
     
 
     getNodeIndex=(node: INode)=> {
@@ -159,7 +113,6 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
         this.setState({ selected: viewEdge });
       };
 
-
     onCreateEdge= (sourceViewNode: INode, targetViewNode: INode)=>{
         const graph = this.state.graph;
         const type ="Custom"
@@ -199,6 +152,35 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
             selected: null,
         });
     };
+
+    render() {
+        const { graphConfig } = this.props
+        const { NodeTypes, EdgeTypes } = graphConfig
+        const { graph, selected } = this.state
+        const { nodes, edges } = graph
+        this.GraphView = React.createRef();
+        return (
+          <div id='graph'>
+            <GraphView 
+                        ref={el => (this.GraphView = el)}
+                        nodeKey={NODE_KEY}
+                        nodes={nodes}
+                        edges={edges}
+                        selected={selected}
+                        nodeTypes={NodeTypes}
+                        nodeSubtypes={NodeTypes}
+                        edgeTypes={EdgeTypes}
+                        onSelectNode={this.onSelectNode}
+                        onCreateNode={this.onCreateNode}
+                        onUpdateNode={this.onUpdateNode}
+                        onDeleteNode={this.onDeleteNode}
+                        onSelectEdge={this.onSelectEdge}
+                        onCreateEdge={this.onCreateEdge}
+                        onSwapEdge={this.onSwapEdge}
+                        onDeleteEdge={this.onDeleteEdge}/>
+          </div>
+        );
+      }
 
 }  
 
