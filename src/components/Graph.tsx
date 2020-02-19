@@ -49,15 +49,15 @@ interface IGraphState {
 }
 
 export class Graph extends React.Component<IGraphProps, IGraphState> {
-    GraphView;
+    GraphView: React.Component<import("react-digraph").IGraphViewProps, any, any> | React.RefObject<unknown> | null;
   
   constructor(props) {
     super(props);
       
-    this.state = {graph: {nodes: [],edges: []},selected: []}
+    this.state = {graph: {nodes: [],edges: []},selected: null }
   }
   
-  onSelectNode = (viewNode: INode | null) => {
+  onSelectNode = (viewNode: INode) => {
     this.setState({ selected: viewNode });
   };
 
@@ -67,7 +67,7 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
      const type = "emptyNode";
      const viewNode = {
        id: this.state.graph.nodes.length+1,
-       title: this.state.graph.nodes.length.toString(),
+       title: (this.state.graph.nodes.length+1).toString(),
        type,
        x,
        y,
@@ -126,7 +126,7 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
         };
         if (viewEdge.source !== viewEdge.target) {
           graph.edges = [...graph.edges, viewEdge];
-          this.setState({graph,selected: viewEdge,
+          this.setState({graph,selected: viewEdge
           });
         }
       };
