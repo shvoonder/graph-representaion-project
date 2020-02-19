@@ -62,15 +62,27 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
   };
 
 
+  /* calcWeight = (viewNode:INode) => {
+    let count=0;  
+     for(const Edge of this.state.graph.edges ){
+          if(Edge.source[NODE_KEY]===viewNode[NODE_KEY]){
+            count++;
+          }  
+      }
+      return count; 
+  }; */
+
+
   onCreateNode =(x: number, y: number) =>{
      const graph = this.state.graph
      const type = "emptyNode";
-     const viewNode = {
+     const viewNode = {  
        id: this.state.graph.nodes.length+1,
-       title: (this.state.graph.nodes.length+1).toString(),
+       title:(0).toString(),
        type,
        x,
        y,
+       weight:0,
      };
      graph.nodes = [...graph.nodes, viewNode];
     this.setState({ graph });
@@ -125,6 +137,8 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
           type,
         };
         if (viewEdge.source !== viewEdge.target) {
+          sourceViewNode.weight+=1;
+          sourceViewNode.title=sourceViewNode.weight.toString();
           graph.edges = [...graph.edges, viewEdge];
           this.setState({graph,selected: viewEdge
           });
@@ -146,8 +160,23 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
             selected: edge,
         });
     };
+
+    findRelNode=(viewEdge:IEdge)=>{
+     for(const Node of this.state.graph.nodes ){
+          if(Node[NODE_KEY]===viewEdge.source[NODE_KEY]){
+            return Node;
+          }  
+        }
+        return null;
+    };
+
     onDeleteEdge =(viewEdge: IEdge, edges: IEdge[])=> {
         const graph = this.state.graph;
+        const viewNode=this.findRelNode(viewEdge);
+        if(viewNode!=null){
+            const KEY=viewNode[NODE_KEY];
+            this.state.graph.nodes[KEY].weight-=1;
+        }
 
         graph.edges = edges;
         this.setState({
