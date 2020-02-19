@@ -10,18 +10,22 @@ export interface IGraphConfig {
 
 
 interface INodeTypes {
-  empty: {
-      typeText: string;
+  emptyNode: {
       shapeId: string;
       shape: JSX.Element;
+      typeText: string;
   };
-  custom: {
-      typeText: string;
-      shapeId: string;
-      shape: JSX.Element;
+  empty: {
+    shapeId: string;
+    shape: JSX.Element;
+    typeText: string;
+  };
+  special:{
+    shapeId: string;
+    shape: JSX.Element;
+    typeText: string;
   };
 }
-
 interface IEdgeTypes {
     emptyEdge: {
         shapeId: string;
@@ -60,10 +64,10 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
 
   onCreateNode =(x: number, y: number) =>{
      const graph = this.state.graph
-     const type = "special";
+     const type = "emptyNode";
      const viewNode = {
-       id: Date.now(),
-       title: 'Node id',
+       id: this.state.graph.nodes.length+1,
+       title: this.state.graph.nodes.length.toString(),
        type,
        x,
        y,
@@ -96,7 +100,6 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
 
     onDeleteNode =(viewNode: INode, nodeId: string, nodeArr: INode[])=>{
         const graph = this.state.graph;
-        // Delete any connected edges
         const newEdges = graph.edges.filter((edge, i) => {
           return (
             edge.source !== viewNode[NODE_KEY] && edge.target !== viewNode[NODE_KEY]
@@ -115,7 +118,7 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
 
     onCreateEdge= (sourceViewNode: INode, targetViewNode: INode)=>{
         const graph = this.state.graph;
-        const type ="specialEdge"
+        const type ="emptyEdge"
         const viewEdge = {
           source: sourceViewNode[NODE_KEY],
           target: targetViewNode[NODE_KEY],
@@ -160,7 +163,7 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
         const { nodes, edges } = graph
         this.GraphView = React.createRef();
         return (
-          <div id='graph'>
+          <div id='graph' style={{height:1000}}>
             <GraphView 
                         ref={el => (this.GraphView = el)}
                         nodeKey={NODE_KEY}
