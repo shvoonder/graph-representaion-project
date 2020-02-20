@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { GraphView,IEdge,INode} from 'react-digraph';
 import { NODE_KEY} from 'src/graphConfig';
+// import { throws } from 'assert';
 
 
 export interface IGraphConfig {
@@ -112,12 +113,17 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
 
     onDeleteNode =(viewNode: INode, nodeId: string, nodeArr: INode[])=>{
         const graph = this.state.graph;
+        for(const Edge of this.state.graph.edges ){
+            if(Edge.target===viewNode[NODE_KEY]){
+                this.updateWeight(Edge);
+            }
+        }
         const newEdges = graph.edges.filter((edge, i) => {
           return (
             edge.source !== viewNode[NODE_KEY] && edge.target !== viewNode[NODE_KEY]
           );
         });
-    
+        
         graph.nodes = nodeArr;
         graph.edges = newEdges;
     
@@ -161,23 +167,18 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
         });
     };
 
-    findRelNode=(viewEdge:IEdge)=>{
-     for(const Node of this.state.graph.nodes ){
-          if(Node[NODE_KEY]===viewEdge.source[NODE_KEY]){
-            return Node;
-          }  
+    updateWeight=(viewEdge:IEdge)=>{
+        for(const Node of this.state.graph.nodes ){
+            if(Node[NODE_KEY]===viewEdge.source){ 
+            Node.weight-=1;
+            Node.title=Node.weight.toString();
+            }
         }
-        return null;
     };
 
     onDeleteEdge =(viewEdge: IEdge, edges: IEdge[])=> {
         const graph = this.state.graph;
-        const viewNode=this.findRelNode(viewEdge);
-        if(viewNode!=null){
-            const KEY=viewNode[NODE_KEY];
-            this.state.graph.nodes[KEY].weight-=1;
-        }
-
+        this.updateWeight(viewEdge);
         graph.edges = edges;
         this.setState({
             graph,
