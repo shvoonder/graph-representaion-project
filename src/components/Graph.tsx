@@ -186,6 +186,15 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
         });
     };
 
+
+    onCreateFirstNode=()=>{
+
+    }
+    onDeleteFirstNode=()=>{
+        
+    }
+
+
     render() {
         const { graphConfig } = this.props
         const { NodeTypes, EdgeTypes } = graphConfig
