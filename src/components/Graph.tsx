@@ -66,7 +66,7 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
     this.state = {graph: {nodes: [],edges: []}, selected: null }
   }
   
-  onSelectNode = (viewNode: INode) => {
+  onSelectNode = (viewNode: INode | null) => {
     this.setState({ selected: viewNode });
   };
 
@@ -228,18 +228,27 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
         });
       };
 
+
       handleChange = (event: any) => {
-        this.ERFunction(5,0.5)
+        const n = prompt("Please enter n");
+        const p = prompt("Please enter p");
+        if (n != null && p!=null){
+            this.ERFunction(n,p);
+        }
+            
       };
+    
     
 
 
 
-    ERFunction=(n:number , p: number)=>{
+
+    ERFunction=(n:any , p: any)=>{
         let x:number;
         let y:number;
         let c:number;
-        for (let i=0; i<n ; i++ ){
+        this.addStartNode();
+        for (let i=0; i<n-1 ; i++ ){
             x=Math.floor(Math.random() * 3000)+60;
             y=Math.floor(Math.random() * 3000)+60;
             this.onCreateNode(x, y);
@@ -254,6 +263,7 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
             }
         }
     };
+
     
     
     render() {
@@ -262,19 +272,13 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
         const { graph, selected } = this.state
         const { nodes, edges } = graph
         this.GraphView = React.createRef();
-
+        
+        
         return (
+        <div className="graph-header">
+        <button onClick={this.handleChange}>Erdos-Reyni</button>
           <div id='graph' style={{height:1000}}>
-           <div className="graph-header">
-          <button onClick={this.addStartNode}>Add Node</button>
-          <button onClick={this.deleteStartNode}>Delete Node</button>
-          <input
-            className="total-nodes"
-            type="number"
-            onBlur={this.handleChange}
-          />
-          />
-          </div>
+          
             <GraphView ref={el => (this.GraphView = el)}
                         nodeKey={NODE_KEY}
                         nodes={nodes}
@@ -292,8 +296,10 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
                         onSwapEdge={this.onSwapEdge}
                         onDeleteEdge={this.onDeleteEdge}
                         />
-          </div>
+           </div>
+        </div>
         );
+        
       }
 }  
 
