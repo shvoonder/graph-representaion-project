@@ -58,6 +58,12 @@ import * as React from 'react'
           shapeId: '#specialEdge',
         },
       },
+     NodeSubTypes:{
+        emptyNode: {
+            shape: EmptyNodeShape,
+            shapeId: '#empty',
+        }
+     } ,
       NodeTypes: {
         emptyNode: {
           shape: EmptyNodeShape,

@@ -1,15 +1,22 @@
 import * as React from 'react';
 import { GraphView,IEdge,INode} from 'react-digraph';
 import { NODE_KEY} from 'src/graphConfig';
+// import { classNames } from 'react-select/src/utils';
 // import { throws } from 'assert';
 
 
 export interface IGraphConfig {
   NodeTypes: INodeTypes,
+  NodeSubTypes:INodeSubTypes
   EdgeTypes: IEdgeTypes
 }
 
-
+interface INodeSubTypes{
+    emptyNode: {
+        shapeId: string;
+        shape: JSX.Element;
+    };
+}
 interface INodeTypes {
   emptyNode: {
       shapeId: string;
@@ -51,11 +58,12 @@ interface IGraphState {
 
 export class Graph extends React.Component<IGraphProps, IGraphState> {
     GraphView: React.Component<import("react-digraph").IGraphViewProps, any, any> | React.RefObject<unknown> | null;
+
   
   constructor(props) {
     super(props);
       
-    this.state = {graph: {nodes: [],edges: []},selected: null }
+    this.state = {graph: {nodes: [],edges: []}, selected: null }
   }
   
   onSelectNode = (viewNode: INode) => {
@@ -72,7 +80,16 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
       }
       return count; 
   }; */
-
+   
+  
+  
+  
+  /* id: this.state.graph.nodes.length+1,
+     title:(0).toString(),
+    type:"emptyNode",
+    x:0,
+    y:0,
+    weight:0 */
 
   onCreateNode =(x: number, y: number) =>{
      const graph = this.state.graph
@@ -185,32 +202,86 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
             selected: null,
         });
     };
+    addStartNode = () => {
+        const graph = this.state.graph;
+        graph.nodes = [
+          {
+            id: this.state.graph.nodes.length+1,
+            title:(0).toString(),
+            type:"emptyNode",
+            x:0,
+            y:0,
+            weight:0,
+          },
+          ...this.state.graph.nodes,
+        ];
+        this.setState({
+          graph,
+        });
+      };
+      deleteStartNode = () => {
+        const graph = this.state.graph;
+        graph.nodes.splice(0, 1);
+        graph.nodes = [...this.state.graph.nodes];
+        this.setState({
+          graph,
+        });
+      };
+
+      handleChange = (event: any) => {
+        this.ERFunction(5,0.5)
+      };
+    
 
 
-    onCreateFirstNode=()=>{
 
-    }
-    onDeleteFirstNode=()=>{
-        
-    }
+    ERFunction=(n:number , p: number)=>{
+        let x:number;
+        let y:number;
+        let c:number;
+        for (let i=0; i<n ; i++ ){
+            x=Math.floor(Math.random() * 3000)+60;
+            y=Math.floor(Math.random() * 3000)+60;
+            this.onCreateNode(x, y);
+        }
+        for (const Node1  of this.state.graph.nodes){
+            for (const Node2 of this.state.graph.nodes){
+                c=Math.random();
+                if(c>p && Node1[NODE_KEY]!==Node2[NODE_KEY]){
+                    this.onCreateEdge(Node1,Node2);
 
-
+                }
+            }
+        }
+    };
+    
+    
     render() {
         const { graphConfig } = this.props
-        const { NodeTypes, EdgeTypes } = graphConfig
+        const { NodeTypes,NodeSubTypes,EdgeTypes } = graphConfig
         const { graph, selected } = this.state
         const { nodes, edges } = graph
         this.GraphView = React.createRef();
+
         return (
           <div id='graph' style={{height:1000}}>
-            <GraphView 
-                        ref={el => (this.GraphView = el)}
+           <div className="graph-header">
+          <button onClick={this.addStartNode}>Add Node</button>
+          <button onClick={this.deleteStartNode}>Delete Node</button>
+          <input
+            className="total-nodes"
+            type="number"
+            onBlur={this.handleChange}
+          />
+          />
+          </div>
+            <GraphView ref={el => (this.GraphView = el)}
                         nodeKey={NODE_KEY}
                         nodes={nodes}
                         edges={edges}
                         selected={selected}
                         nodeTypes={NodeTypes}
-                        nodeSubtypes={NodeTypes}
+                        nodeSubtypes={NodeSubTypes}
                         edgeTypes={EdgeTypes}
                         onSelectNode={this.onSelectNode}
                         onCreateNode={this.onCreateNode}
@@ -219,11 +290,11 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
                         onSelectEdge={this.onSelectEdge}
                         onCreateEdge={this.onCreateEdge}
                         onSwapEdge={this.onSwapEdge}
-                        onDeleteEdge={this.onDeleteEdge}/>
+                        onDeleteEdge={this.onDeleteEdge}
+                        />
           </div>
         );
       }
-
 }  
 
 
