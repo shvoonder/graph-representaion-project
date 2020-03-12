@@ -229,7 +229,7 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
       };
 
 
-      handleChange = (event: any) => {
+      handleER = (event: any) => {
         const n = prompt("Please enter n");
         const p = prompt("Please enter p");
         if (n != null && p!=null){
@@ -237,6 +237,11 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
         }
             
       };
+
+      handeleAL2 =(event:any)=>{
+        print ();
+
+      } 
     
     
 
@@ -276,9 +281,9 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
         
         return (
         <div className="graph-header">
-        <button onClick={this.handleChange}>Erdos-Reyni</button>
+        <button onClick={this.handleER}>Erdos-Reyni</button>
+        <button onClick={this.handeleAL2}>algorithem 2</button> 
           <div id='graph' style={{height:1000}}>
-          
             <GraphView ref={el => (this.GraphView = el)}
                         nodeKey={NODE_KEY}
                         nodes={nodes}
