@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { GraphView,IEdge,INode} from 'react-digraph';
 import { NODE_KEY} from 'src/graphConfig';
+// import styles from 'src/'
 // import { classNames } from 'react-select/src/utils';
 // import { throws } from 'assert';
 
@@ -237,15 +238,9 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
         }
             
       };
-
-      handeleAL2 =(event:any)=>{
-        print ();
-
-      } 
-    
-    
-
-
+      
+      
+      
 
 
     ERFunction=(n:any , p: any)=>{
@@ -269,6 +264,8 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
         }
     };
 
+
+    
     
     
     render() {
@@ -277,12 +274,12 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
         const { graph, selected } = this.state
         const { nodes, edges } = graph
         this.GraphView = React.createRef();
-        
-        
+    
         return (
-        <div className="graph-header">
-        <button onClick={this.handleER}>Erdos-Reyni</button>
-        <button onClick={this.handeleAL2}>algorithem 2</button> 
+                <div className="graph-header">
+                <button onClick={this.handleER}>Erdos-Reyni</button>
+          
+       
           <div id='graph' style={{height:1000}}>
             <GraphView ref={el => (this.GraphView = el)}
                         nodeKey={NODE_KEY}
