@@ -7,6 +7,7 @@ import {GraphConfig} from './graphConfig'
   
 const nGraphConfig : IGraphConfig = {
      NodeTypes: GraphConfig.NodeTypes ,
+     NodeSubTypes:GraphConfig.NodeSubTypes,
      EdgeTypes: GraphConfig.EdgeTypes 
     }
 
