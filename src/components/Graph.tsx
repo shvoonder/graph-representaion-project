@@ -7,9 +7,10 @@ import { NODE_KEY} from 'src/graphConfig';
 
 
 export interface IGraphConfig {
-  NodeTypes: INodeTypes,
+  NodeTypes: INodeTypes
   NodeSubTypes:INodeSubTypes
   EdgeTypes: IEdgeTypes
+
 }
 
 interface INodeSubTypes{
@@ -51,6 +52,7 @@ interface IGraph {
 interface IGraphProps {
   graphConfig: IGraphConfig
 }
+
 
 interface IGraphState {
   graph: IGraph,
@@ -230,19 +232,19 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
       };
 
 
+
+
       handleER = (event: any) => {
         const n = prompt("Please enter n");
         const p = prompt("Please enter p");
         if (n != null && p!=null){
             this.ERFunction(n,p);
+          
         }
             
       };
       
       
-      
-
-
     ERFunction=(n:any , p: any)=>{
         let x:number;
         let y:number;
@@ -266,18 +268,19 @@ export class Graph extends React.Component<IGraphProps, IGraphState> {
 
 
     
-    
-    
+
+
     render() {
         const { graphConfig } = this.props
         const { NodeTypes,NodeSubTypes,EdgeTypes } = graphConfig
         const { graph, selected } = this.state
         const { nodes, edges } = graph
         this.GraphView = React.createRef();
-    
+
         return (
                 <div className="graph-header">
                 <button onClick={this.handleER}>Erdos-Reyni</button>
+                
           
        
           <div id='graph' style={{height:1000}}>
